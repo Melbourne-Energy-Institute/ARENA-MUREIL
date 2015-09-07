@@ -2,7 +2,9 @@ README - simple instructions on how to run MUREIL
 
 Roger Dargaville rogerd@unimelb.edu.au
 Changlong Wang changlongw@student.unimelb.edu.au
-Marcelle Gannon marcelle.gannon@gmail.comSeptember 2015
+Marcelle Gannon marcelle.gannon@gmail.com
+
+September 2015
 
 ----------
 This README.txt is superseded by the document in user_manual_doc/mureil_software.pdf.
