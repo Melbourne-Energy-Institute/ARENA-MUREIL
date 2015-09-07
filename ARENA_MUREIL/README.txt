@@ -5,7 +5,7 @@ Changlong Wang changlongw@student.unimelb.edu.au
 Marcelle Gannon marcelle.gannon@gmail.comSeptember 2015
 
 ----------
-This README.txt is superseded by the document in doc/mureil_software.pdf.
+This README.txt is superseded by the document in user_manual_doc/mureil_software.pdf.
 ----------
 
 
