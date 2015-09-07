@@ -1,6 +1,8 @@
 README - simple instructions on how to run MUREIL
-Marcelle Gannon marcelle.gannon@gmail.com
-9 March 2013
+
+Roger Dargaville rogerd@unimelb.edu.au
+Changlong Wang changlongw@student.unimelb.edu.au
+Marcelle Gannon marcelle.gannon@gmail.comSeptember 2015
 
 ----------
 This README.txt is superseded by the document in doc/mureil_software.pdf.
@@ -28,6 +30,12 @@ INFO     : Total cost ($M): 189399.75
 
 See the test_ directories for more comprehensive and up to date tests.
 
+
+----------
+Pre-configured example for the Transmission Model
+----------
+
+All the data to run the 21-node NEM transmission network model is located under the “run_transmission” folder on a stand-alone basis. Sample transmission configuration files e.g. daily, monthly, yearly and made-up yearly (28 days sampled from the yearly data) are also made available. Currently, there are two linear programming solvers available to choose for each simulation, including a commercial package “Gurobi” apart from the other free solver “CVXOPT”. Please refer to section 3.2 for the solver installation instructions. The user has to make sure in the configuration file, the intended solver is correctly chosen in both the [Master] and [MarketSolver] configuration sections. The user should use the “#” sign to deactivate the unchosen solver.   [Master]  model: master.txmultimasterflow.TxMultiMasterFlow_Gurobi  #model: master.txmultimasterflow.TxMultiMasterFlow_CVXOPT     [MarketSolver]  model: transmission.market_clearing_engine.MarketClearingEngine_Gurobi  #model: transmission.market_clearing_engine.MarketClearingEngine_CVXOPTTo run the transmission model under the “run_transmission” directory:  run_transmission$ python ../runmureil.py -f TRANS_config_makeupYear.txt
 ------------
 Command line
 ------------
