@@ -160,38 +160,6 @@ Basic rule is - don't spend time optimising your code until you know what's taki
 all the time to run.
 
 
--------------------
-SVN
--------------------
-
-SVN is the version control system on google code. 
-
-A list of useful commands here:
-http://www.thegeekstuff.com/2011/04/svn-command-examples/
-
-The checkout instructions are on google code -> source -> checkout.
-
-Most users will use 'add', 'commit', 'update', 'status' and 'diff'. It's
-good practice before doing a 'commit' to do 'status' and then do
-'diff' on any files with an 'M' (for Modified) in front of them, to
-be sure you know what you've changed.
-
-If you do an 'update' and it says that the merge failed, the file will be in 
-conflict. SVN tries to combine changes that someone else has checked in
-with changes that you may have made locally. If you edit different parts of the
-same file this is likely to work. If you have edited the same parts of the
-file, then it will report a conflict.
-
-See here for how to resolve it:
-http://www.websanova.com/tutorials/svn/svn-conflicts
-
-Don't whatever you do choose the (mc) mine-conflict option if 'update' offers
-you that. What that will do
-is ignore whatever you just updated and just use your new version - so you may
-be throwing away someone else's edits. This is often hard to find out and makes
-people very cross!  (p) postpone is the best option.
-
-
 ---------------------
 SlowResponseThermal
 ---------------------
