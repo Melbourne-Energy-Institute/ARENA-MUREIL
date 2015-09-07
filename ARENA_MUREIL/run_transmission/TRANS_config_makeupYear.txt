@@ -1,0 +1,704 @@
+# MUREIL configuration for complex set up of flow model 
+
+
+
+[Master]
+
+model: master.txmultimasterflow.TxMultiMasterFlow_Gurobi
+#model: master.txmultimasterflow.TxMultiMasterFlow_CVXOPT
+
+global: Global
+
+iterations: 500
+
+output_frequency: 1
+
+output_file: TRANS_28days_makeupYear.pkl
+
+algorithm: Algorithm
+
+dispatch_fail_price: 10000
+
+wind: Wind
+
+solar: Solar
+
+ocgt1: OCGT_1
+
+ocgt2: OCGT_2
+
+ocgt3: OCGT_3
+
+ocgt4: OCGT_4
+
+ocgt5: OCGT_5
+
+ocgt6: OCGT_6
+
+ocgt7: OCGT_7
+
+ocgt8: OCGT_8
+
+ocgt9: OCGT_9
+
+ocgt10: OCGT_10
+
+ocgt11: OCGT_11
+
+ocgt12: OCGT_12
+
+ocgt13: OCGT_13
+
+ocgt14: OCGT_14
+
+ocgt15: OCGT_15
+
+ocgt16: OCGT_16
+
+ocgt17: OCGT_17
+
+ocgt18: OCGT_18
+
+ccgt1: CCGT_1
+
+ccgt2: CCGT_2
+
+ccgt3: CCGT_3
+
+ccgt4: CCGT_4
+
+ccgt5: CCGT_5
+
+ccgt6: CCGT_6
+
+ccgt7: CCGT_7
+
+browncoal1: BrownCoal_1 
+
+browncoal2: BrownCoal_2 
+
+browncoal3: BrownCoal_3 
+
+browncoal4: BrownCoal_4 
+
+browncoal5: BrownCoal_5 
+
+browncoal6: BrownCoal_6 
+
+blackcoal1: BlackCoal_1 
+
+blackcoal2: BlackCoal_2 
+
+blackcoal3: BlackCoal_3 
+
+blackcoal4: BlackCoal_4 
+
+blackcoal5: BlackCoal_5 
+
+blackcoal6: BlackCoal_6 
+
+blackcoal7: BlackCoal_7 
+
+blackcoal8: BlackCoal_8 
+
+blackcoal9: BlackCoal_9 
+
+blackcoal10: BlackCoal_10 
+
+blackcoal11: BlackCoal_11 
+
+blackcoal12: BlackCoal_12
+
+blackcoal13: BlackCoal_13
+
+blackcoal14: BlackCoal_14
+
+blackcoal15: BlackCoal_15
+
+blackcoal16: BlackCoal_16
+
+blackcoal17: BlackCoal_17
+
+data: Data
+
+demand: Demand
+
+transmission: Transmission
+
+missed_supply: MissedSupply
+
+generators: wind solar browncoal1 browncoal2 browncoal3 browncoal4 browncoal5 browncoal6 blackcoal1 blackcoal2 blackcoal3 blackcoal4 blackcoal5 blackcoal6 blackcoal7 blackcoal8 blackcoal9 blackcoal10 blackcoal11 blackcoal12 blackcoal13 blackcoal14 blackcoal15 blackcoal16 blackcoal17 ccgt1 ccgt2 ccgt3 ccgt4 ccgt5 ccgt6 ccgt7 ocgt1 ocgt2 ocgt3 ocgt4 ocgt5 ocgt6 ocgt7 ocgt8 ocgt9 ocgt10 ocgt11 ocgt12 ocgt13 ocgt14 ocgt15 ocgt16 ocgt17 ocgt18 
+
+
+run_periods: 2015 2020 2025 2030 2035 2040 2045 2050
+
+#run_periods: 2015 2020 2025
+
+do_plots: False
+
+
+
+[Demand]
+
+model: demand.demandmatrix.DemandMatrix
+
+data_name: demand
+
+node_list_name: demand_hdr
+
+bid_price: 10000
+
+#scale: {2015: 1.0, 2020: 1.14, 2025: 1.29, 2030: 1.42, 2035: 1.57, 2040: 1.71, 2045: 1.85, 2050: 2.0}
+scale: {2015: 1.0, 2020: 1.0, 2025: 1.0, 2030: 1.0, 2035: 1.0, 2040: 1.0, 2045: 1.0, 2050: 1.0}
+
+
+
+[MarketSolver]
+
+model: transmission.market_clearing_engine.MarketClearingEngine_Gurobi
+#model: transmission.market_clearing_engine.MarketClearingEngine_CVXOPT
+
+show_progress: False
+
+feastol: 1e-9
+
+abstol: 1e-3
+
+reltol: 1e-3
+
+
+
+
+
+[Transmission]
+
+# NOTE: ROAM Consulting is acknowledged as the source of the transmission
+
+# network data used here. (22-node model).
+
+model: transmission.txgrid.TxGrid
+
+site_filename: tx_connect_map.csv
+
+grid_filenames: nodes.csv lines.csv shift_factors.csv A-matrix.csv
+
+
+
+[Data]
+
+model: data.ncdata.Data
+
+#ts_float_list: demand wind solar
+
+ts_csv_list: demand wind solar
+
+demand_file: demo_28days_demand.csv
+
+wind_file: wind_data_28days.csv 
+
+solar_file: solar_data_28days.csv
+
+
+[Global]
+
+min_param_val: -100
+
+max_param_val: 100
+
+timestep_mins: 60
+
+time_period_yrs: 5
+
+carbon_price: {2015: 0, 2020: 25, 2025: 40, 2030: 55, 2035: 85, 2040: 125, 2045: 185, 2050: 275}
+
+
+
+[Algorithm]
+
+model: algorithm.geneticalgorithm.Engine
+
+base_mute: 0.01
+
+gene_mute: 0.1
+
+pop_size: 500
+
+mort: 0.5
+
+nuke_power: 20
+
+processes: 20
+
+seed: 12345
+
+
+
+[Wind]
+
+model: generator.txmultivariablegenerator.TxMultiVariableGeneratorBase
+
+capital_cost: 2.0
+
+size: 50
+
+#install: 200
+
+vom: 1
+
+detail_type: Wind
+
+data_name: wind
+
+lifetime_yrs: 5
+
+params_to_site_data_string: 1001 1002 1003 1004 1005 1006 1007 1008 1009 1010 1011 1012 1013 1014 1015 1016 1017 1018 1019 1020 1021 1022 1023 1024 1025 1026 1027 1028 1029 1030 1031 1032 1033 1034 1035 1036 1037 1038 1039 1040 1041 1042 1043
+
+
+
+[Solar]
+
+model: generator.txmultivariablegenerator.TxMultiVariableGeneratorBase
+
+capital_cost: 3.5
+
+size: 50
+
+#install: 200
+
+vom: 1
+
+detail_type: Solar
+
+data_name: solar
+
+lifetime_yrs: 25
+
+params_to_site_data_string: 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016 2017 2018 2019 2020 2021 2022 2023 2024 2025 2026 2027 2028 2029 2030 2031 2032 2033 2034 2035 2036 2037 2038 2039 2040 2041 2042 2043
+
+
+
+[BlackCoal_1]
+model: thermal.txmultiinstantthermal.TxMultiInstantFixedThermal
+capital_cost: 3.1
+fuel_price_mwh: 20
+carbon_intensity: 0.99
+lifetime_yrs: 50
+site_index: 4001
+startup_data_string: [[4001,2720,1985,2035]]
+
+[BlackCoal_2]
+model: thermal.txmultiinstantthermal.TxMultiInstantFixedThermal
+capital_cost: 3.1
+fuel_price_mwh: 20
+carbon_intensity: 1.00
+lifetime_yrs: 50
+site_index: 4002
+startup_data_string: [[4002,1320,1980,2030]]
+
+[BlackCoal_3]
+model: thermal.txmultiinstantthermal.TxMultiInstantFixedThermal
+capital_cost: 3.1
+fuel_price_mwh: 20
+carbon_intensity: 1.08
+lifetime_yrs: 50
+site_index: 4003
+startup_data_string: [[4003,2080,1970,2020]]
+
+[BlackCoal_4]
+model: thermal.txmultiinstantthermal.TxMultiInstantFixedThermal
+capital_cost: 3.1
+fuel_price_mwh: 20
+carbon_intensity: 1.21
+lifetime_yrs: 50
+site_index: 4004
+startup_data_string: [[4004, 145,2000,2050]]
+
+[BlackCoal_5]
+model: thermal.txmultiinstantthermal.TxMultiInstantFixedThermal
+capital_cost: 3.1
+fuel_price_mwh: 20
+carbon_intensity: 0.97
+lifetime_yrs: 50
+site_index: 4005
+startup_data_string: [[4005, 700,1990,2040]]
+
+[BlackCoal_6]
+model: thermal.txmultiinstantthermal.TxMultiInstantFixedThermal
+capital_cost: 3.1
+fuel_price_mwh: 20
+carbon_intensity: 0.92
+lifetime_yrs: 50
+site_index: 4006
+startup_data_string: [[4006, 900,2000,2050]]
+
+[BlackCoal_7]
+model: thermal.txmultiinstantthermal.TxMultiInstantFixedThermal
+capital_cost: 3.1
+fuel_price_mwh: 20
+carbon_intensity: 0.96
+lifetime_yrs: 50
+site_index: 4007
+startup_data_string: [[4007,1680,1980,2030]]
+
+[BlackCoal_8]
+model: thermal.txmultiinstantthermal.TxMultiInstantFixedThermal
+capital_cost: 3.1
+fuel_price_mwh: 20
+carbon_intensity: 0.91
+lifetime_yrs: 50
+site_index: 4008
+startup_data_string: [[4008,1460,1995,2045]]
+
+[BlackCoal_9]
+model: thermal.txmultiinstantthermal.TxMultiInstantFixedThermal
+capital_cost: 3.1
+fuel_price_mwh: 20
+carbon_intensity: 1.00
+lifetime_yrs: 50
+site_index: 4009
+startup_data_string: [[4009,2880,1985,2035]]
+
+[BlackCoal_10]
+model: thermal.txmultiinstantthermal.TxMultiInstantFixedThermal
+capital_cost: 3.1
+fuel_price_mwh: 20
+carbon_intensity: 1.16
+lifetime_yrs: 50
+site_index: 4010
+startup_data_string: [[4010, 600,1970,2020]]
+
+[BlackCoal_11]
+model: thermal.txmultiinstantthermal.TxMultiInstantFixedThermal
+capital_cost: 3.1
+fuel_price_mwh: 20
+carbon_intensity: 1.19
+lifetime_yrs: 50
+site_index: 4011
+startup_data_string: [[4011,  66,2000,2050]]
+
+[BlackCoal_12]
+model: thermal.txmultiinstantthermal.TxMultiInstantFixedThermal
+capital_cost: 3.1
+fuel_price_mwh: 20
+carbon_intensity: 0.94
+lifetime_yrs: 50
+site_index: 4012
+startup_data_string: [[4012,1340,1995,2045]]
+
+[BlackCoal_13]
+model: thermal.txmultiinstantthermal.TxMultiInstantFixedThermal
+capital_cost: 3.1
+fuel_price_mwh: 20
+carbon_intensity: 1.04
+lifetime_yrs: 50
+site_index: 4013
+startup_data_string: [[4013,1000,1980,2030]]
+
+[BlackCoal_14]
+model: thermal.txmultiinstantthermal.TxMultiInstantFixedThermal
+capital_cost: 3.1
+fuel_price_mwh: 20
+carbon_intensity: 0.86
+lifetime_yrs: 50
+site_index: 4014
+startup_data_string: [[4014, 443,2000,2050]]
+
+[BlackCoal_15]
+model: thermal.txmultiinstantthermal.TxMultiInstantFixedThermal
+capital_cost: 3.1
+fuel_price_mwh: 20
+carbon_intensity: 0.94
+lifetime_yrs: 50
+site_index: 4015
+startup_data_string: [[4015,1400,1985,2035]]
+
+[BlackCoal_16]
+model: thermal.txmultiinstantthermal.TxMultiInstantFixedThermal
+capital_cost: 3.1
+fuel_price_mwh: 20
+carbon_intensity: 0.90
+lifetime_yrs: 50
+site_index: 4016
+startup_data_string: [[4016, 856,2000,2050]]
+
+[BlackCoal_17]
+model: thermal.txmultiinstantthermal.TxMultiInstantFixedThermal
+capital_cost: 3.1
+fuel_price_mwh: 20
+carbon_intensity: 0.92
+lifetime_yrs: 50
+site_index: 4017
+startup_data_string: [[4017, 724,2005,2055]]
+
+[BrownCoal_1]
+model: thermal.txmultiinstantthermal.TxMultiInstantFixedThermal
+capital_cost: 3.7
+fuel_price_mwh: 10
+carbon_intensity: 1.21
+lifetime_yrs: 50
+site_index: 3001
+startup_data_string: [[3001, 160,1970,2020]]
+
+[BrownCoal_2]
+model: thermal.txmultiinstantthermal.TxMultiInstantFixedThermal
+capital_cost: 3.7
+fuel_price_mwh: 10
+carbon_intensity: 1.22
+lifetime_yrs: 50
+site_index: 3002
+startup_data_string: [[3002,2192,1985,2035]]
+
+[BrownCoal_3]
+model: thermal.txmultiinstantthermal.TxMultiInstantFixedThermal
+capital_cost: 3.7
+fuel_price_mwh: 10
+carbon_intensity: 1.24
+lifetime_yrs: 50
+site_index: 3003
+startup_data_string: [[3003, 965,1995,2045]]
+
+[BrownCoal_4]
+model: thermal.txmultiinstantthermal.TxMultiInstantFixedThermal
+capital_cost: 3.7
+fuel_price_mwh: 10
+carbon_intensity: 1.42
+lifetime_yrs: 50
+site_index: 3004
+startup_data_string: [[3004,1480,1980,2030]]
+
+[BrownCoal_5]
+model: thermal.txmultiinstantthermal.TxMultiInstantFixedThermal
+capital_cost: 3.7
+fuel_price_mwh: 10
+carbon_intensity: 1.53
+lifetime_yrs: 50
+site_index: 3005
+startup_data_string: [[3005,1600,1970,2020]]
+
+[BrownCoal_6]
+model: thermal.txmultiinstantthermal.TxMultiInstantFixedThermal
+capital_cost: 3.7
+fuel_price_mwh: 10
+carbon_intensity: 0.95
+lifetime_yrs: 50
+site_index: 3006
+startup_data_string: [[3006, 546,1985,2035]]
+
+[CCGT_1]
+model: thermal.txmultiinstantthermal.TxMultiInstantFixedThermal
+capital_cost: 1.0
+fuel_price_mwh: 43
+carbon_intensity: 0.52
+lifetime_yrs: 30
+site_index: 6001
+startup_data_string: [[6001, 480,2000,2050]]
+
+[CCGT_2]
+model: thermal.txmultiinstantthermal.TxMultiInstantFixedThermal
+capital_cost: 1.0
+fuel_price_mwh: 43
+carbon_intensity: 0.60
+lifetime_yrs: 30
+site_index: 6002
+startup_data_string: [[6002, 180,2000,2050]]
+
+[CCGT_3]
+model: thermal.txmultiinstantthermal.TxMultiInstantFixedThermal
+capital_cost: 1.0
+fuel_price_mwh: 43
+carbon_intensity: 0.44
+lifetime_yrs: 30
+site_index: 6003
+startup_data_string: [[6003, 242,2005,2055]]
+
+[CCGT_4]
+model: thermal.txmultiinstantthermal.TxMultiInstantFixedThermal
+capital_cost: 1.0
+fuel_price_mwh: 43
+carbon_intensity: 0.43
+lifetime_yrs: 30
+site_index: 6004
+startup_data_string: [[6004, 350,2000,2050]]
+
+[CCGT_5]
+model: thermal.txmultiinstantthermal.TxMultiInstantFixedThermal
+capital_cost: 1.0
+fuel_price_mwh: 43
+carbon_intensity: 0.42
+lifetime_yrs: 30
+site_index: 6005
+startup_data_string: [[6005, 605,2010,2060]]
+
+[CCGT_6]
+model: thermal.txmultiinstantthermal.TxMultiInstantFixedThermal
+capital_cost: 1.0
+fuel_price_mwh: 43
+carbon_intensity: 0.47
+lifetime_yrs: 30
+site_index: 6006
+startup_data_string: [[6006, 420,2010,2060]]
+
+[CCGT_7]
+model: thermal.txmultiinstantthermal.TxMultiInstantFixedThermal
+capital_cost: 1.0
+fuel_price_mwh: 43
+carbon_intensity: 0.43
+lifetime_yrs: 30
+site_index: 6007
+startup_data_string: [[6007, 208,2010,2060]]
+
+[OCGT_1]
+model: thermal.txmultiinstantthermal.TxMultiInstantFixedThermal
+capital_cost: 0.7
+fuel_price_mwh: 61
+carbon_intensity: 0.79
+lifetime_yrs: 30
+site_index: 5001
+startup_data_string: [[5001, 120,2000,2030]]
+
+[OCGT_2]
+model: thermal.txmultiinstantthermal.TxMultiInstantFixedThermal
+capital_cost: 0.7
+fuel_price_mwh: 61
+carbon_intensity: 0.74
+lifetime_yrs: 30
+site_index: 5002
+startup_data_string: [[5002, 720,2010,2040]]
+
+[OCGT_3]
+model: thermal.txmultiinstantthermal.TxMultiInstantFixedThermal
+capital_cost: 0.7
+fuel_price_mwh: 61
+carbon_intensity: 0.64
+lifetime_yrs: 30
+site_index: 5003
+startup_data_string: [[5003, 518,2010,2040]]
+
+[OCGT_4]
+model: thermal.txmultiinstantthermal.TxMultiInstantFixedThermal
+capital_cost: 0.7
+fuel_price_mwh: 61
+carbon_intensity: 0.68
+lifetime_yrs: 30
+site_index: 5004
+startup_data_string: [[5004, 300,2005,2035]]
+
+[OCGT_5]
+model: thermal.txmultiinstantthermal.TxMultiInstantFixedThermal
+capital_cost: 0.7
+fuel_price_mwh: 61
+carbon_intensity: 1.05
+lifetime_yrs: 30
+site_index: 5005
+startup_data_string: [[5005, 204,2000,2030]]
+
+[OCGT_6]
+model: thermal.txmultiinstantthermal.TxMultiInstantFixedThermal
+capital_cost: 0.7
+fuel_price_mwh: 61
+carbon_intensity: 0.74
+lifetime_yrs: 30
+site_index: 5006
+startup_data_string: [[5006, 640,2010,2040]]
+
+[OCGT_7]
+model: thermal.txmultiinstantthermal.TxMultiInstantFixedThermal
+capital_cost: 0.7
+fuel_price_mwh: 61
+carbon_intensity: 0.68
+lifetime_yrs: 30
+site_index: 5007
+startup_data_string: [[5007, 495,2010,2040]]
+
+[OCGT_8]
+model: thermal.txmultiinstantthermal.TxMultiInstantFixedThermal
+capital_cost: 0.7
+fuel_price_mwh: 61
+carbon_intensity: 0.68
+lifetime_yrs: 30
+site_index: 5008
+startup_data_string: [[5008, 435,2005,2035]]
+
+[OCGT_9]
+model: thermal.txmultiinstantthermal.TxMultiInstantFixedThermal
+capital_cost: 0.7
+fuel_price_mwh: 61
+carbon_intensity: 0.63
+lifetime_yrs: 30
+site_index: 5009
+startup_data_string: [[5009, 282,2000,2030]]
+
+[OCGT_10]
+model: thermal.txmultiinstantthermal.TxMultiInstantFixedThermal
+capital_cost: 0.7
+fuel_price_mwh: 61
+carbon_intensity: 0.71
+lifetime_yrs: 30
+site_index: 5010
+startup_data_string: [[5010, 370,2010,2040]]
+
+[OCGT_11]
+model: thermal.txmultiinstantthermal.TxMultiInstantOptimisableThermal
+capital_cost: 0.7
+fuel_price_mwh: 61
+carbon_intensity: 0.63
+lifetime_yrs: 30
+site_index: 5011
+
+[OCGT_12]
+model: thermal.txmultiinstantthermal.TxMultiInstantOptimisableThermal
+capital_cost: 0.7
+fuel_price_mwh: 61
+carbon_intensity: 0.63
+lifetime_yrs: 30
+site_index: 5012
+
+[OCGT_13]
+model: thermal.txmultiinstantthermal.TxMultiInstantOptimisableThermal
+capital_cost: 0.7
+fuel_price_mwh: 61
+carbon_intensity: 0.63
+lifetime_yrs: 30
+site_index: 5013
+
+[OCGT_14]
+model: thermal.txmultiinstantthermal.TxMultiInstantOptimisableThermal
+capital_cost: 0.7
+fuel_price_mwh: 61
+carbon_intensity: 0.63
+lifetime_yrs: 30
+site_index: 5014
+
+[OCGT_15]
+model: thermal.txmultiinstantthermal.TxMultiInstantOptimisableThermal
+capital_cost: 0.7
+fuel_price_mwh: 61
+carbon_intensity: 0.63
+lifetime_yrs: 30
+site_index: 5015
+
+[OCGT_16]
+model: thermal.txmultiinstantthermal.TxMultiInstantOptimisableThermal
+capital_cost: 0.7
+fuel_price_mwh: 61
+carbon_intensity: 0.63
+lifetime_yrs: 30
+site_index: 5016
+
+[OCGT_17]
+model: thermal.txmultiinstantthermal.TxMultiInstantOptimisableThermal
+capital_cost: 0.7
+fuel_price_mwh: 61
+carbon_intensity: 0.63
+lifetime_yrs: 30
+site_index: 5017
+
+[OCGT_18]
+model: thermal.txmultiinstantthermal.TxMultiInstantOptimisableThermal
+capital_cost: 0.7
+fuel_price_mwh: 61
+carbon_intensity: 0.63
+lifetime_yrs: 30
+site_index: 5018
+
+

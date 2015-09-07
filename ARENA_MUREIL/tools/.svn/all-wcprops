@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 28
+/svn/!svn/ver/99/trunk/tools
+END
+mureiltypes.py
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/65/trunk/tools/mureiltypes.py
+END
+mureilbuilder.py
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/99/trunk/tools/mureilbuilder.py
+END
+globalconfig.py
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/86/trunk/tools/globalconfig.py
+END
+mureilbase.py
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/65/trunk/tools/mureilbase.py
+END
+configurablebase.py
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/83/trunk/tools/configurablebase.py
+END
+testutilities.py
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/73/trunk/tools/testutilities.py
+END
+mureilexception.py
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/97/trunk/tools/mureilexception.py
+END
+mureiloutput.py
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/98/trunk/tools/mureiloutput.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/33/trunk/tools/__init__.py
+END
